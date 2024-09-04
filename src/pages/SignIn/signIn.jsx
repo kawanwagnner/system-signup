@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./css/style.css"; // Importa o arquivo CSS externo
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
@@ -18,7 +19,6 @@ const SignIn = () => {
       const data = await response.json();
 
       if (response.ok) {
-        // Armazenar o token de autenticação
         localStorage.setItem("token", data.token);
         alert("Login realizado com sucesso!");
       } else {
@@ -30,14 +30,15 @@ const SignIn = () => {
   };
 
   return (
-    <form onSubmit={handleSignIn}>
-      <h2>Sign In</h2>
+    <form onSubmit={handleSignIn} className="form-container">
+      <h2 className="form-title">Sign In</h2>
       <input
         type="email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         placeholder="Email"
         required
+        className="form-input"
       />
       <input
         type="password"
@@ -45,8 +46,16 @@ const SignIn = () => {
         onChange={(e) => setPassword(e.target.value)}
         placeholder="Password"
         required
+        className="form-input"
       />
-      <button type="submit">Sign In</button>
+      <select name="payOrNot" id="payOrNot" className="form-select">
+        <option>Selecionar Status de Pgmt.</option>
+        <option value="Pago">Pago</option>
+        <option value="Não Pago">Não Pago</option>
+      </select>
+      <button type="submit" className="form-button">
+        Sign In
+      </button>
     </form>
   );
 };
