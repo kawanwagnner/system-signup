@@ -1,28 +1,34 @@
 import React, { useState } from "react";
-import "./css/style.css"; // Importa o arquivo CSS externo
+import { useNavigate } from "react-router-dom"; // Importar useNavigate
+import "./css/style.css";
 
 const SignIn = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [user, setUser] = useState("");
+  const [pass, setPass] = useState("");
+  const navigate = useNavigate(); // Inicializar o useNavigate
 
   const handleSignIn = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("/api/auth/signin", {
+      const response = await fetch("http://localhost:3000/auth/signin", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ user, pass }), // Usando "user" e "pass" no corpo
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        localStorage.setItem("token", data.token);
+        // Salvar o token no localStorage como "authToken"
+        localStorage.setItem("authToken", data.token);
         alert("Login realizado com sucesso!");
+
+        // Redirecionar para a home
+        navigate("/");
       } else {
-        alert(data.msg);
+        alert(data.msg || "Erro ao tentar fazer login.");
       }
     } catch (err) {
       alert("Erro ao tentar fazer login: " + err.message);
@@ -31,28 +37,23 @@ const SignIn = () => {
 
   return (
     <form onSubmit={handleSignIn} className="form-container">
-      <h2 className="form-title">Sign In</h2>
+      <h2 className="form-title">Acesso Restrito</h2>
       <input
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="Email"
+        type="text"
+        value={user}
+        onChange={(e) => setUser(e.target.value)}
+        placeholder="Usuário"
         required
         className="form-input"
       />
       <input
         type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        placeholder="Password"
+        value={pass}
+        onChange={(e) => setPass(e.target.value)}
+        placeholder="Chave Mestre"
         required
         className="form-input"
       />
-      <select name="payOrNot" id="payOrNot" className="form-select">
-        <option>Selecionar Status de Pgmt.</option>
-        <option value="Pago">Pago</option>
-        <option value="Não Pago">Não Pago</option>
-      </select>
       <button type="submit" className="form-button">
         Sign In
       </button>
