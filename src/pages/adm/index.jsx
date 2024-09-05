@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import "./css/style.css";
 import SearchAppBar from "../../components/Header";
 import { Link } from "react-router-dom";
 import { Box } from "@mui/material";
+
+import "./css/style.css";
 
 // Componente do Pop-up para Editar Usuário
 const EditUserModal = ({ user, onSave, onClose }) => {
@@ -147,7 +148,7 @@ const UserList = ({ users, onDelete, onEdit, searchTerm }) => {
       {filteredUsers.map((userObj) => (
         <li key={userObj._id} className="user-item">
           <span className="user-info">
-            <strong>{userObj.name}</strong> <br /> <Box my={1} />{" "}
+            <strong>Nome:</strong> {userObj.name} <br /> <Box my={1} />{" "}
             <strong>Endereço:</strong> {userObj.endereco} <br />
             <Box my={1} />
             <strong>Quantidade:</strong> {userObj.quantidade}

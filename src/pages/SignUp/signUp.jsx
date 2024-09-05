@@ -85,7 +85,7 @@ const SignUp = () => {
           <option value="Não Pago">Não Pago</option>
         </select>
         <button type="submit" className="form-button">
-          Sign Up
+          Criar Usuário
         </button>
       </form>
       <br />
