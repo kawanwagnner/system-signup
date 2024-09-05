@@ -25,6 +25,11 @@ const SignUp = () => {
 
       if (response.ok) {
         alert("Cadastro realizado com sucesso!");
+        // Limpa os campos do formulário
+        setName("");
+        setEmail("");
+        setPassword("");
+        setPayOrNot("");
       } else {
         alert(data.msg);
       }
