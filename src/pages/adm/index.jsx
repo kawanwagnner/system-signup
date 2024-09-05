@@ -128,30 +128,40 @@ const UserList = ({ users, onDelete, onEdit }) => {
     return <p className="empty-message">Nenhum usuário disponível.</p>;
   }
 
+  // Filtrar o usuário "adm", garantindo que 'name' existe e não é 'adm'
+  const filteredUsers = users.filter(
+    (userObj) => userObj.name && userObj.name.trim().toLowerCase() !== "adm"
+  );
+
+  // Verificar se há usuários após a filtragem
+  if (filteredUsers.length === 0) {
+    return <p className="empty-message">Nenhum usuário disponível.</p>;
+  }
+
   return (
     <ul className="user-list">
-      {users.map((user) => (
-        <li key={user._id} className="user-item">
+      {filteredUsers.map((userObj) => (
+        <li key={userObj._id} className="user-item">
           <span className="user-info">
-            <strong>{user.name}</strong> <br /> <Box my={1} />{" "}
-            <strong>Endereço:</strong> {user.endereco} <br />
+            <strong>{userObj.name}</strong> <br /> <Box my={1} />{" "}
+            <strong>Endereço:</strong> {userObj.endereco} <br />
             <Box my={1} />
-            <strong>Quantidade:</strong> {user.quantidade}
+            <strong>Quantidade:</strong> {userObj.quantidade}
           </span>
           <div className="btns">
             <span
               className={`pay-status ${
-                user.payOrNot === "Pago" ? "paid" : "not-paid"
+                userObj.payOrNot === "Pago" ? "paid" : "not-paid"
               }`}
             >
-              {user.payOrNot === "Pago" ? "Pago" : "Não Pago"}
+              {userObj.payOrNot === "Pago" ? "Pago" : "Não Pago"}
             </span>
-            <button className="edit-button" onClick={() => onEdit(user)}>
+            <button className="edit-button" onClick={() => onEdit(userObj)}>
               ✏️ Editar
             </button>
             <button
               className="delete-button"
-              onClick={() => onDelete(user._id)}
+              onClick={() => onDelete(userObj._id)}
             >
               Deletar
             </button>
