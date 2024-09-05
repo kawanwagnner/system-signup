@@ -6,8 +6,8 @@ import "./css/style.css";
 
 const SignUp = () => {
   const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [endereco, setEndereco] = useState("");
+  const [quantidade, setQuantidade] = useState("");
   const [payOrNot, setPayOrNot] = useState("");
 
   const handleSignUp = async (e) => {
@@ -18,7 +18,7 @@ const SignUp = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name, payOrNot, email, password }),
+        body: JSON.stringify({ name, payOrNot, endereco, quantidade }),
       });
 
       const data = await response.json();
@@ -27,8 +27,8 @@ const SignUp = () => {
         alert("Cadastro realizado com sucesso!");
         // Limpa os campos do formulário
         setName("");
-        setEmail("");
-        setPassword("");
+        setEndereco("");
+        setQuantidade("");
         setPayOrNot("");
       } else {
         alert(data.msg);
@@ -51,20 +51,21 @@ const SignUp = () => {
           placeholder="Nome"
           required
           className="form-input"
+          maxLength={42}
         />
         <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email"
+          type="text"
+          value={endereco}
+          onChange={(e) => setEndereco(e.target.value)}
+          placeholder="Endereço"
           required
           className="form-input"
         />
         <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Senha de acesso"
+          type="text"
+          value={quantidade}
+          onChange={(e) => setQuantidade(e.target.value)}
+          placeholder="Quantidade"
           required
           className="form-input"
         />

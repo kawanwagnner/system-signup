@@ -1,67 +1,89 @@
+/* Container principal */
 .manage-users-container {
-  max-width: 600px;
+  max-width: 800px;
   margin: 0 auto;
-  padding: 20px;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  background-color: #f4f6f9;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
 }
 
 .manage-users-title {
-  font-size: 24px;
+  font-size: 26px;
   color: #333;
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
 }
 
+/* Lista de usuários */
 .user-list {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
 .user-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #fff;
-  padding: 10px 15px;
-  margin-bottom: 10px;
-  border-radius: 4px;
+  background-color: #ffffff;
+  padding: 20px;
+  margin-bottom: 15px;
+  border-radius: 8px;
   border: 1px solid #ddd;
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
 }
 
 .user-info {
-  font-size: 18px;
+  font-size: 16px;
   color: #555;
+  max-width: 60%;
 }
 
-/* New styles for payment status */
+/* Estilo do status de pagamento */
 .pay-status {
-  padding: 5px 10px;
-  border-radius: 4px;
-  font-weight: bold;
-  margin-left: 10px;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  display: inline-block;
 }
 
 .paid {
-  color: green;
-  font-weight: bold;
+  color: #28a745;
+  background-color: #e6f4ea;
 }
 
 .not-paid {
-  color: red;
-  font-weight: bold;
+  text-wrap: nowrap;
+  color: #dc3545;
+  background-color: #f9e7e7;
+}
+
+/* Botões de ação */
+.action-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.delete-button,
+.edit-button {
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  font-weight: 600;
+  border: none;
+  width: 100px; /* Garantir que tenham o mesmo tamanho */
+  text-align: center;
 }
 
 .delete-button {
   background-color: #e74c3c;
   color: #fff;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
 }
 
 .delete-button:hover {
@@ -71,83 +93,126 @@
 .edit-button {
   background-color: #3c72e7;
   color: #fff;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
 }
 
 .edit-button:hover {
-  background-color: #2b35c0;
+  background-color: #2b54c0;
 }
 
+/* Modal de edição */
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.6);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000; /* Para garantir que fique sobre outros elementos */
 }
 
 .modal-content {
-  background-color: white;
-  padding: 20px;
-  border-radius: 8px;
+  background-color: #fff;
+  padding: 25px;
+  border-radius: 10px;
   width: 100%;
-  max-width: 400px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  animation: fadeIn 0.3s ease;
+  max-width: 500px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
-.modal-actions {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 15px;
-}
-
-/* Efeito de entrada */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
+/* Mensagem quando não há usuários */
 .empty-message {
-  color: #999;
+  color: #888;
   font-size: 18px;
   text-align: center;
+  margin-top: 40px;
+  font-style: italic;
+}
+
+/* Botões de navegação inferior */
+.max-width {
+  display: flex;
+  justify-content: center;
+  gap: 20px; /* Maior gap entre os botões */
   margin-top: 20px;
 }
 
-/* navbar botom */
-.max-width {
-  width: 350px;
-  margin: auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.back-home {
-  text-align: center;
-  width: 100%;
-  padding: 0.75rem;
-  border-radius: 4px;
-  border: none;
+.back-home,
+.register-new-person {
+  padding: 12px 20px;
+  border-radius: 6px;
   background-color: #007bff;
   color: #fff;
   cursor: pointer;
   font-size: 1rem;
-  margin-bottom: 10px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  white-space: nowrap; /* Evita que o texto quebre */
+}
+
+.back-home:hover,
+.register-new-person:hover {
+  background-color: #0056b3;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .manage-users-container {
+    padding: 20px;
+  }
+
+  .user-item {
+    flex-direction: column;
+    align-items: flex-start;
+    margin: auto;
+    text-align: center;
+  }
+
+  .user-info {
+    max-width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .pay-status {
+    font-size: 14px;
+  }
+
+  .action-buttons {
+    justify-content: flex-start;
+    width: 100%;
+  }
+
+  .modal-content {
+    padding: 20px;
+  }
+
+  .max-width {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .back-home,
+  .register-new-person {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* Estilo da classe .btns que contém os botões e o status de pagamento */
+.btns {
+  display: flex;
+  flex-direction: column; /* Coloca os botões e o status um embaixo do outro */
+  align-items: center; /* Alinha à direita */
+  gap: 10px; /* Adiciona espaço entre os itens */
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .btns {
+    flex-direction: row; /* Muda a direção para fila em telas menores */
+    justify-content: space-between; /* Espaça bem os elementos */
+    width: 100%;
+    gap: 5px;
+  }
 }

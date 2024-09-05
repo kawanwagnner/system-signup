@@ -2,13 +2,15 @@ import React, { useState, useEffect } from "react";
 import "./css/style.css";
 import SearchAppBar from "../../components/Header";
 import { Link } from "react-router-dom";
+import { Box } from "@mui/material";
 
 // Componente do Pop-up para Editar Usuário
 const EditUserModal = ({ user, onSave, onClose }) => {
   const [formData, setFormData] = useState({
     name: user.name,
     payOrNot: user.payOrNot,
-    email: user.email,
+    endereco: user.endereco,
+    quantidade: user.quantidade,
     password: "",
   });
 
@@ -65,11 +67,21 @@ const EditUserModal = ({ user, onSave, onClose }) => {
             />
           </label>
           <label>
-            E-mail:
+            Endereço:
             <input
-              type="email"
-              name="email"
-              value={formData.email}
+              type="text"
+              name="endereco"
+              value={formData.endereco}
+              onChange={handleChange}
+              required
+            />
+          </label>
+          <label>
+            Quantidade:
+            <input
+              type="text"
+              name="quantidade"
+              value={formData.quantidade}
               onChange={handleChange}
               required
             />
@@ -121,21 +133,29 @@ const UserList = ({ users, onDelete, onEdit }) => {
       {users.map((user) => (
         <li key={user._id} className="user-item">
           <span className="user-info">
-            {user.name} ({user.email})
+            <strong>{user.name}</strong> <br /> <Box my={1} />{" "}
+            <strong>Endereço:</strong> {user.endereco} <br />
+            <Box my={1} />
+            <strong>Quantidade:</strong> {user.quantidade}
           </span>
-          <span
-            className={`pay-status ${
-              user.payOrNot === "Pago" ? "paid" : "not-paid"
-            }`}
-          >
-            {user.payOrNot === "Pago" ? "Pago" : "Não Pago"}
-          </span>
-          <button className="edit-button" onClick={() => onEdit(user)}>
-            ✏️ Editar
-          </button>
-          <button className="delete-button" onClick={() => onDelete(user._id)}>
-            Deletar
-          </button>
+          <div className="btns">
+            <span
+              className={`pay-status ${
+                user.payOrNot === "Pago" ? "paid" : "not-paid"
+              }`}
+            >
+              {user.payOrNot === "Pago" ? "Pago" : "Não Pago"}
+            </span>
+            <button className="edit-button" onClick={() => onEdit(user)}>
+              ✏️ Editar
+            </button>
+            <button
+              className="delete-button"
+              onClick={() => onDelete(user._id)}
+            >
+              Deletar
+            </button>
+          </div>
         </li>
       ))}
     </ul>
@@ -157,7 +177,11 @@ const ManageUsers = () => {
       const data = await response.json();
 
       if (response.ok) {
-        setUsers(data);
+        // Ordena os usuários pelo campo de data de criação (assumindo que seja 'createdAt')
+        const sortedUsers = data.sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        );
+        setUsers(sortedUsers);
       } else {
         alert(data.msg);
       }
