@@ -52,7 +52,7 @@ const SignIn = () => {
           <h2 className="form-title">Acesso Restrito</h2>
           <input
             type="text"
-            value={user}
+            value={user.toLowerCase()}
             onChange={(e) => setUser(e.target.value)}
             placeholder="Usuário"
             required
