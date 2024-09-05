@@ -3,7 +3,7 @@ import React from "react";
 import { Navigate } from "react-router-dom";
 
 const PrivateRoute = ({ children }) => {
-  const isAuthenticated = !!localStorage.getItem("authToken"); // Verifica se o usuário está autenticado
+  const isAuthenticated = !!sessionStorage.getItem("authToken"); // Verifica se o usuário está autenticado
 
   return isAuthenticated ? children : <Navigate to="/signin" />;
 };

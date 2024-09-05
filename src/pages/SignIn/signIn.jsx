@@ -27,7 +27,7 @@ const SignIn = () => {
       const data = await response.json();
 
       if (response.ok) {
-        localStorage.setItem("authToken", data.token);
+        sessionStorage.setItem("authToken", data.token);
         alert("Login realizado com sucesso!");
         navigate("/");
       } else {
