@@ -15,10 +15,21 @@ const EditUserModal = ({ user, onSave, onClose }) => {
   });
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+
+    if (name === "quantidade") {
+      // Permite apenas números e define o valor como uma string numérica
+      const numericValue = value.replace(/\D/g, ""); // Remove caracteres não numéricos
+      setFormData({
+        ...formData,
+        [name]: numericValue,
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -26,7 +37,7 @@ const EditUserModal = ({ user, onSave, onClose }) => {
 
     try {
       const response = await fetch(
-        `http://localhost:3000/api/users/update/${user._id}`,
+        `https://system-signup-people.onrender.com/api/users/update/${user._id}`,
         {
           method: "PUT",
           headers: {
@@ -82,7 +93,7 @@ const EditUserModal = ({ user, onSave, onClose }) => {
               type="text"
               name="quantidade"
               value={formData.quantidade}
-              onChange={handleChange}
+              onInput={handleChange}
               required
             />
           </label>
@@ -98,16 +109,6 @@ const EditUserModal = ({ user, onSave, onClose }) => {
               <option value="Não Pago">Não Pago</option>
             </select>
           </label>
-          <label>
-            Nova Senha:
-            <input
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-            />
-          </label>
           <div className="modal-actions">
             <button type="submit" className="back-home">
               Salvar
@@ -122,20 +123,23 @@ const EditUserModal = ({ user, onSave, onClose }) => {
   );
 };
 
-// Lista de Usuários
-const UserList = ({ users, onDelete, onEdit }) => {
+// Lista de Usuários com funcionalidade de pesquisa
+const UserList = ({ users, onDelete, onEdit, searchTerm }) => {
   if (!users || users.length === 0) {
     return <p className="empty-message">Nenhum usuário disponível.</p>;
   }
 
-  // Filtrar o usuário "adm", garantindo que 'name' existe e não é 'adm'
+  // Filtrar os usuários com base no nome e no termo de busca
   const filteredUsers = users.filter(
-    (userObj) => userObj.name && userObj.name.trim().toLowerCase() !== "adm"
+    (userObj) =>
+      userObj.name &&
+      userObj.name.trim().toLowerCase() !== "adm" &&
+      userObj.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   // Verificar se há usuários após a filtragem
   if (filteredUsers.length === 0) {
-    return <p className="empty-message">Nenhum usuário disponível.</p>;
+    return <p className="empty-message">Nenhum usuário encontrado.</p>;
   }
 
   return (
@@ -176,6 +180,7 @@ const UserList = ({ users, onDelete, onEdit }) => {
 const ManageUsers = () => {
   const [users, setUsers] = useState([]);
   const [editingUser, setEditingUser] = useState(null); // Para gerenciar o usuário que está sendo editado
+  const [searchTerm, setSearchTerm] = useState(""); // Estado para o termo de busca
 
   useEffect(() => {
     fetchUsers();
@@ -183,11 +188,12 @@ const ManageUsers = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await fetch("http://localhost:3000/api/users");
+      const response = await fetch(
+        "https://system-signup-people.onrender.com/api/users"
+      );
       const data = await response.json();
 
       if (response.ok) {
-        // Ordena os usuários pelo campo de data de criação (assumindo que seja 'createdAt')
         const sortedUsers = data.sort(
           (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
         );
@@ -203,7 +209,7 @@ const ManageUsers = () => {
   const handleDeleteUser = async (userId) => {
     try {
       const response = await fetch(
-        `http://localhost:3000/api/users/${userId}`,
+        `https://system-signup-people.onrender.com/api/users/${userId}`,
         {
           method: "DELETE",
         }
@@ -241,10 +247,21 @@ const ManageUsers = () => {
       <br />
       <div className="manage-users-container">
         <h2 className="manage-users-title">Gerenciar Usuários</h2>
+
+        {/* Campo de busca */}
+        <input
+          type="text"
+          placeholder="Buscar usuário..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="search-input"
+        />
+
         <UserList
           users={users}
           onDelete={handleDeleteUser}
           onEdit={handleEditUser}
+          searchTerm={searchTerm}
         />
       </div>
       <br />

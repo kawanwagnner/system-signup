@@ -13,13 +13,16 @@ const SignUp = () => {
   const handleSignUp = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:3000/auth/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ name, payOrNot, endereco, quantidade }),
-      });
+      const response = await fetch(
+        "https://system-signup-people.onrender.com/auth/signup",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ name, payOrNot, endereco, quantidade }),
+        }
+      );
 
       const data = await response.json();
 

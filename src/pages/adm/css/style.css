@@ -100,6 +100,7 @@
 }
 
 /* Modal de edição */
+/* Modal de edição */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -110,16 +111,108 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 999; /* Garante que o modal fique acima de outros elementos */
 }
 
 .modal-content {
-  background-color: #fff;
-  padding: 25px;
-  border-radius: 10px;
+  background-color: #ffffff;
+  padding: 20px 30px;
+  border-radius: 12px;
   width: 100%;
-  max-width: 500px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  max-width: 600px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  position: relative; /* Para posicionar o botão de fechar se necessário */
+  animation: fadeIn 0.3s ease-out; /* Animação de entrada suave */
 }
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal-content h2 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.modal-content form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.modal-content label {
+  display: flex;
+  flex-direction: column;
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.modal-content input[type="text"],
+.modal-content input[type="password"],
+.modal-content select {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 16px;
+  color: #333;
+  background-color: #fff;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.modal-content input[type="text"]:focus,
+.modal-content input[type="password"]:focus,
+.modal-content select:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+  outline: none;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.modal-actions button {
+  padding: 12px 20px;
+  border-radius: 6px;
+  border: none;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.modal-actions .back-home {
+  background-color: #28a745;
+  color: #fff;
+}
+
+.modal-actions .back-home:hover {
+  background-color: #218838;
+}
+
+.modal-actions .delete-button {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.modal-actions .delete-button:hover {
+  background-color: #c82333;
+}
+
+/* End Modal Edição */
 
 /* Mensagem quando não há usuários */
 .empty-message {
@@ -215,4 +308,31 @@
     width: 100%;
     gap: 5px;
   }
+}
+
+/* Campo de busca */
+.search-input {
+  display: block;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto 10px auto;
+  padding: 10px 15px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 16px;
+  color: #333;
+  background-color: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.search-input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+  outline: none;
+}
+
+.search-input::placeholder {
+  color: #aaa;
+  font-style: italic;
 }
