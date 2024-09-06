@@ -130,12 +130,13 @@ const UserList = ({ users, onDelete, onEdit, searchTerm }) => {
     return <p className="empty-message">Nenhum usuário disponível.</p>;
   }
 
-  // Filtrar os usuários com base no nome e no termo de busca
+  // Filtrar os usuários com base no nome, endereço e no termo de busca
   const filteredUsers = users.filter(
     (userObj) =>
       userObj.name &&
       userObj.name.trim().toLowerCase() !== "adm" &&
-      userObj.name.toLowerCase().includes(searchTerm.toLowerCase())
+      (userObj.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        userObj.endereco.toLowerCase().includes(searchTerm.toLowerCase()))
   );
 
   // Verificar se há usuários após a filtragem
