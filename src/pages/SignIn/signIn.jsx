@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import "./css/style.css";
 
 const SignIn = () => {
   const [user, setUser] = useState("");
   const [pass, setPass] = useState("");
   const [loading, setLoading] = useState(false); // Estado de carregamento
+  const [showPassword, setShowPassword] = useState(false); // Estado para controlar a visibilidade da senha
   const navigate = useNavigate();
 
   const handleSignIn = async (e) => {
@@ -53,19 +56,28 @@ const SignIn = () => {
           <input
             type="text"
             value={user.toLowerCase()}
-            onChange={(e) => setUser(e.target.value)}
+            onChange={(e) => setUser(e.target.value.replace(/\s/g, ""))} // Remover espaços
             placeholder="Usuário"
             required
             className="form-input"
           />
-          <input
-            type="password"
-            value={pass}
-            onChange={(e) => setPass(e.target.value)}
-            placeholder="Chave Mestre"
-            required
-            className="form-input"
-          />
+          <div className="password-container">
+            <input
+              type={showPassword ? "text" : "password"} // Alterna entre texto e senha
+              value={pass}
+              onChange={(e) => setPass(e.target.value.replace(/\s/g, ""))} // Remover espaços
+              placeholder="Chave Mestre"
+              required
+              className="form-input"
+            />
+            <span
+              className="password-toggle"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? <VisibilityOff /> : <Visibility />}{" "}
+              {/* Ícone de senha */}
+            </span>
+          </div>
           <button type="submit" className="form-button">
             Entrar
           </button>
