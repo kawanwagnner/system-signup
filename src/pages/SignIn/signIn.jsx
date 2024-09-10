@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
@@ -9,10 +9,33 @@ const SignIn = () => {
   const [pass, setPass] = useState("");
   const [loading, setLoading] = useState(false); // Estado de carregamento
   const [showPassword, setShowPassword] = useState(false); // Estado para controlar a visibilidade da senha
+  const [isOffline, setIsOffline] = useState(false); // Estado para detectar se está offline
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Verifica a conexão de internet ao carregar o componente
+    const handleOnlineStatus = () => setIsOffline(!navigator.onLine);
+
+    window.addEventListener("online", handleOnlineStatus);
+    window.addEventListener("offline", handleOnlineStatus);
+
+    // Remove os listeners ao desmontar o componente
+    return () => {
+      window.removeEventListener("online", handleOnlineStatus);
+      window.removeEventListener("offline", handleOnlineStatus);
+    };
+  }, []);
 
   const handleSignIn = async (e) => {
     e.preventDefault();
+
+    if (isOffline) {
+      alert(
+        "Sem conexão com a internet. Verifique sua rede e tente novamente."
+      );
+      return;
+    }
+
     setLoading(true); // Ativar tela de carregamento
 
     try {
@@ -78,6 +101,9 @@ const SignIn = () => {
               {/* Ícone de senha */}
             </span>
           </div>
+          {isOffline && (
+            <div className="offline-warning">Sem conexão com a internet.</div>
+          )}
           <button type="submit" className="form-button">
             Entrar
           </button>
