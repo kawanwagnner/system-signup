@@ -72,6 +72,7 @@ const SignIn = () => {
         <div className="loading-screen">
           <div className="spinner"></div>
           <p>Carregando...</p>
+          <p>Estamos quase lá, obrigado por esperar! {";)"}</p>
         </div>
       ) : (
         <form onSubmit={handleSignIn} className="form-container">
@@ -92,13 +93,13 @@ const SignIn = () => {
               placeholder="Chave Mestre"
               required
               className="form-input"
+              autoCapitalize={showPassword ? "none" : undefined} // Desativa o autoCapitalize só quando visível como texto
             />
             <span
               className="password-toggle"
               onClick={() => setShowPassword(!showPassword)}
             >
               {showPassword ? <VisibilityOff /> : <Visibility />}{" "}
-              {/* Ícone de senha */}
             </span>
           </div>
           {isOffline && (
